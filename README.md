@@ -1,102 +1,104 @@
-# skin-cancer-classification
+# DermatoScan AI: End-to-End Skin Cancer Classification System
 
-## Table of Contents
-- [Local Setup](#local-setup)
-  - [Training the Model](#training-the-model)
-- [Docker Setup](#docker-setup)
-  - [Building the Docker Image](#building-the-docker-image)
-  - [Running the Docker Container](#running-the-docker-container)
-- [Using DockerHub Image](#using-dockerhub-image)
-  - [Pulling the Image](#pulling-the-image)
-  - [Running the Container](#running-the-container)
+[![GitHub License](https://img.shields.io/github/license/rashedulalbab1234/DermatoScan-End-to-End-AI)](LICENSE)
+[![Docker Image](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com/r/rashedulalbab1234/dermatoscan-ai)
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
+[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch)](https://pytorch.org)
 
-## Local Setup
+**DermatoScan AI** is a professional-grade, full-stack medical imaging application designed for the multi-class classification of skin lesions. Leveraging state-of-the-art Deep Learning (EfficientNet-B3) and a high-performance backend, it provides near-instant diagnostic insights for seven distinct types of skin diseases.
 
-Clone the repository:
+---
 
-```bash
-git clone https://github.com/Enamul16012001/skin-cancer-classification.git
-cd skin-cancer-classification
+## 🚀 Key Features
+
+-   **High-Accuracy Model:** Powered by **EfficientNet-B3**, pre-trained on ImageNet and fine-tuned on the HAM10000 dataset.
+-   **Full-Stack Architecture:** Integrated with **FastAPI** for a fast, asynchronous backend and **Jinja2** for a responsive, modern web interface.
+-   **Authentication System:** Secure user registration and login system with JWT authentication and salted password hashing (bcrypt).
+-   **Prediction Tracking:** Automated database logging of prediction results and confidence levels for every user.
+-   **Admin Dashboard:** Comprehensive oversight of system users and diagnostic history.
+-   **DevOps Ready:** Fully containerized with Docker and automated CI/CD pipelines via GitHub Actions.
+
+---
+
+## 🛠️ Tech Stack
+
+-   **Deep Learning:** PyTorch, Torchvision (EfficientNet-B3)
+-   **Backend:** FastAPI, Uvicorn, Python 3.10
+-   **Database:** SQLite (Relational Storage)
+-   **Frontend:** HTML5, CSS3, Jinja2 Templates
+-   **Security:** JWT (JSON Web Tokens), Bcrypt
+-   **Deployment:** Docker, GitHub Actions (CI/CD)
+
+---
+
+## 📦 Project Structure
+
+```text
+├── .github/workflows/      # CI/CD pipelines
+├── Dataset/                # Image preprocessing and organization scripts
+├── static/                 # CSS, images, and user uploads
+├── templates/              # HTML views (Jinja2)
+├── database.py             # SQLite ORM & Logic
+├── main.py                 # FastAPI Application entry point
+├── model.py                # Neural Network architecture
+├── train.py                # Model training pipeline
+├── utils.py                # Data loading & helper functions
+└── Dockerfile              # Containerization configuration
 ```
 
-Create a virtual environment:
+---
 
-**Windows:**
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-```
+## ⚙️ Installation & Usage
 
-**macOS/Linux:**
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-Install Dependencies:
+### 1. Local Setup
 
 ```bash
+# Clone the repository
+git clone https://github.com/rashedulalbab1234/DermatoScan-End-to-End-AI.git
+cd DermatoScan-End-to-End-AI
+
+# Create and activate virtual environment
+python -m venv env
+.\env\Scripts\activate  # Windows
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Run the application
+python main.py
 ```
+Access the app at: `http://localhost:8000`
 
-### Training the Model
+### 2. Docker Setup
 
-To train the model, run the training script:
-
-#### On Windows:
-```bash
-python train.py
-```
-
-#### On Ubuntu/Linux:
-```bash
-python3 train.py
-```
-
-If you encounter any issues on Ubuntu, ensure you have proper permissions:
-```bash
-chmod +x train.py
-python3 train.py
-```
-
-
-## Docker Setup
-
-### Building the Docker Image
-
-Build the Docker image using the Dockerfile provided in the repository:
+To run the system without any local installation:
 
 ```bash
-docker build -t skin-cancer-classification .
+# Pull the latest image
+docker pull rashedulalbab1234/dermatoscan-ai:latest
+
+# Run the container
+docker run -p 8000:8000 rashedulalbab1234/dermatoscan-ai
 ```
 
-### Running the Docker Container
+---
 
-Run the Docker container with:
+## 🧬 Model Architecture
 
-```bash
-docker run -p 8000:8000 skin-cancer-classification
-```
+The core of the system is the **EfficientNet-B3** architecture, chosen for its optimal balance between accuracy and computational efficiency.
+-   **Input Size:** 224x224 RGB Images
+-   **Optimizer:** Adam with custom Learning Rate Scheduling
+-   **Loss Function:** Cross-Entropy Loss
+-   **Classification Layers:** Customized dense layers (512 -> 128 -> 7 output classes)
 
-This will:
-1. Start the container
-2. Expose the prediction API on port 8000
-3. Load the pre-trained model
+---
 
-## Using DockerHub Image
+## 🤝 Contribution & License
 
-### Pulling the Image
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-Pull the pre-built Docker image from DockerHub:
+### Attribution
+Digital foundations for this project were derived from the open-source work of MD. ENAMUL ATIQ and enhanced for a full-stack, end-to-end production environment.
 
-```bash
-docker pull enamulatiq/skin-cancer-classification:latest
-```
-
-### Running the Container
-
-Run the container from the DockerHub image:
-
-```bash
-docker run -p 8000:8000 enamulatiq/skin-cancer-classification
-```
+---
+**Developed with ❤️ by [Rashed]**
