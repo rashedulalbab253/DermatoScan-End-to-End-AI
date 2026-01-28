@@ -54,7 +54,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/rashedulalbab1234/DermatoScan-End-to-End-AI.git
+git clone https://github.com/rashedulalbab253/DermatoScan-End-to-End-AI.git
 cd DermatoScan-End-to-End-AI
 
 # Create and activate virtual environment
