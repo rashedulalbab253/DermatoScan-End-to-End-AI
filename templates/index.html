@@ -1,124 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Skin Disease Detector</title>
+    <title>DermatoScan AI - Clinical Analysis</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 40px 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 700px;
-            background-color: #ffffff;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
-
-        .upload-section,
-        .result-section {
-            margin-bottom: 30px;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #f9fbfc;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
-        }
-
-        .upload-section input[type="file"] {
-            display: block;
-            margin: 0 auto 20px auto;
-        }
-
-        .upload-section img {
-            display: block;
-            max-width: 100%;
-            max-height: 300px;
-            margin: 10px auto;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-        }
-
-        .upload-section button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .upload-section button:hover {
-            background-color: #2980b9;
-        }
-
-        .result-section {
-            text-align: center;
-            font-size: 18px;
-            color: #2c3e50;
-            min-height: 50px;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .upload-section button {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
 </head>
-<body>
-    <div class="container">
-        <h1>Skin Disease Prediction</h1>
 
-        <div class="upload-section">
+<body style="display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+    <div class="container glass-panel"
+        style="max-width: 700px; width: 100%; padding: 40px; animation: fadeIn 0.8s ease-out;">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <div style="font-size: 60px; margin-bottom: 10px;">🔬</div>
+            <h1 class="text-gradient" style="font-size: 36px; font-weight: 800; margin: 0;">Skin Diagnostic Hub</h1>
+            <p style="color: var(--text-muted); margin-top: 10px;">Professional-grade AI classification interface</p>
+        </div>
+
+        <div class="upload-section card"
+            style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); margin-bottom: 30px;">
             <form id="upload-form" action="/predict" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" accept="image/*" onchange="previewImage(event)" required>
-                <img id="preview" alt="Image Preview"
-                     {% if image_path %}
-                     src="{{ image_path }}"
-                     style="display:block"
-                     {% else %}
-                     style="display:none"
-                     {% endif %}
-                />
-                <button type="submit">Predict</button>
+                <input type="file" name="file" accept="image/*" onchange="previewImage(event)" required id="file-input"
+                    style="display: none;">
+                <label for="file-input" class="file-input-button" style="cursor: pointer;">
+                    <span style="font-size: 30px;">📁</span>
+                    <span>Select Lesion Specimen</span>
+                </label>
+
+                <div id="preview-container" style="display: none; margin-top: 20px; text-align: center;">
+                    <img id="preview" alt="Specimen Preview"
+                        style="max-width: 100%; border-radius: 16px; border: 1px solid var(--glass-border); box-shadow: var(--shadow);">
+                </div>
+
+                <button type="submit" class="btn btn-primary"
+                    style="width: 100%; margin-top: 25px; padding: 18px; font-size: 18px;">
+                    ⚡ Initiate AI Analysis
+                </button>
             </form>
         </div>
 
-        <div class="result-section" id="result">
-            {{ prediction }}
+        <div class="result-section card" id="result"
+            style="text-align: center; background: rgba(99, 102, 241, 0.05); border: 1px dashed var(--primary);">
+            {% if prediction %}
+            <h3
+                style="color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">
+                Inference Result</h3>
+            <div class="text-gradient" style="font-size: 28px; font-weight: 800;">{{ prediction }}</div>
+            {% else %}
+            <span style="color: var(--text-muted); font-style: italic;">Awaiting specimen for real-time
+                analysis...</span>
+            {% endif %}
+        </div>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="/login"
+                style="color: var(--text-muted); text-decoration: none; font-size: 14px; opacity: 0.7; transition: var(--transition);"
+                onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">← Return to Main Portal</a>
         </div>
     </div>
 
     <script>
         function previewImage(event) {
+            const container = document.getElementById('preview-container');
             const output = document.getElementById('preview');
             output.src = URL.createObjectURL(event.target.files[0]);
-            output.style.display = 'block';
+            container.style.display = 'block';
+
+            const labelText = document.querySelector('.file-input-button span:nth-child(2)');
+            labelText.textContent = "Specimen Loaded: " + event.target.files[0].name;
         }
     </script>
 </body>
+
 </html>
