@@ -97,8 +97,7 @@ The core of the system is the **EfficientNet-B3** architecture, chosen for its o
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-### Attribution
-Digital foundations for this project were derived from the open-source work of MD. ENAMUL ATIQ and enhanced for a full-stack, end-to-end production environment.
+
 
 ---
 **Developed with ❤️ by [Rashed]**
